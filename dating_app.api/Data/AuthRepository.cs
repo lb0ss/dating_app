@@ -27,7 +27,7 @@ namespace dating_app.api.Data
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt)) 
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt)) // convert passwordSalt back to hmac which is then used to generated computedHash
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
 
