@@ -14,6 +14,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using dating_app.api.Helpers;
 
 namespace dating_app.api
 {
@@ -23,7 +27,6 @@ namespace dating_app.api
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -56,6 +59,17 @@ namespace dating_app.api
             }
             else
             {
+                app.UseExceptionHandler(builder => {
+                    builder.Run(async context => {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        var error = context.Features.Get<IExceptionHandlerFeature>();   // get the details of the error
+                        if (error != null) 
+                        {
+                            context.Response.AddApplicationError(error.Error.Message);
+                            await context.Response.WriteAsync(error.Error.Message);
+                        }
+                    });
+                });
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 // app.UseHsts();
             }
