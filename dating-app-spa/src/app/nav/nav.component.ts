@@ -13,7 +13,7 @@ export class NavComponent implements OnInit {
   password: string;
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private alertify: AlertifyService
     ) { }
 
