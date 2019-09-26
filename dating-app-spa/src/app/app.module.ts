@@ -18,11 +18,12 @@ import { appRoutes } from './routes';
 import { AuthGuard } from './_guards/auth.guard';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
-import { AuthService } from './services/auth.service';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -45,7 +46,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       MessagesComponent,
       ListsComponent,
       MemberCardComponent,
-      MemberDetailComponent
+      MemberDetailComponent,
+      MemberEditComponent
    ],
    imports: [
       BrowserModule,
@@ -68,7 +70,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       ErrorInterceptorProvider,
       MemberDetailResolver,
       MemberListResolver,
-      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+      MemberEditResolver,
+      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
    ],
    bootstrap: [
       AppComponent
