@@ -24,6 +24,7 @@ export class MemberDetailComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.user = data['user'];
+      console.log(`user member since: ${this.user}`);
     });
 
     this.galleryOptions = [
