@@ -23,7 +23,7 @@ namespace dating_app.api.Helpers
             response.Headers.Add("Pagination", 
                 JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));  // header to be sent back
             // expose the header to prevent CORS error
-            response.Headers.Add("Access-Control-Expose-Headers", "Pagination-Error");
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
             
         }
         public static int CalculateAge(this DateTime dateTime)
