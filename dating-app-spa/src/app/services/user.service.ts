@@ -1,11 +1,13 @@
-import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { User } from "../_models/user";
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { User } from '../_models/user';
+import { PaginatedResult } from '../_models/pagination';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 
 export class UserService {
@@ -13,12 +15,31 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + "users");
+  getUsers(page?, itemsPerPage?): Observable<PaginatedResult<User[]>> {
+    const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
+    let params = new HttpParams();  // create query string parameters
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<User[]>(this.baseUrl + 'users', { observe: 'response', params})
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          console.log(`response header ${JSON.stringify(response.headers)}`);
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+            console.log(`service - paginated result: ${paginatedResult.pagination}`);
+          }
+          return paginatedResult;
+        })
+      );
   }
 
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(this.baseUrl + "users/" + id);
+    return this.http.get<User>(this.baseUrl + 'users/' + id);
   }
 
   updateUser(id: number, user: User) {
