@@ -8,7 +8,7 @@ namespace dating_app.api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
-                name: "BirthDay",
+                name: "DateofBirth",
                 table: "Users",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -95,7 +95,7 @@ namespace dating_app.api.Migrations
                 name: "Photos");
 
             migrationBuilder.DropColumn(
-                name: "BirthDay",
+                name: "DateofBirth",
                 table: "Users");
 
             migrationBuilder.DropColumn(

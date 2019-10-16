@@ -45,7 +45,7 @@ namespace dating_app.api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("BirthDay");
+                    b.Property<DateTime>("DateofBirth");
 
                     b.Property<string>("City");
 
