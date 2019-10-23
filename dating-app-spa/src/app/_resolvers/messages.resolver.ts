@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 import { AlertifyService } from '../services/alertify.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Message } from '../_models/Message';
+import { Message } from '../_models/message';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
