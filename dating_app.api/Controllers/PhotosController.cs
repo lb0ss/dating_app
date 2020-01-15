@@ -93,7 +93,7 @@ namespace dating_app.api.Controllers
             {
                 var photoToReturn = _mapper.Map<PhotoForReturnDto>(photo);
 
-                return CreatedAtRoute("GetPhoto", new { id = photo.Id }, photoToReturn);
+                return CreatedAtRoute("GetPhoto", new { id = photo.Id }, photoToReturn);    // go to GetPhoto route to retrieve the newly created photo
             }
 
             return BadRequest("Could not add the photo");
@@ -153,13 +153,13 @@ namespace dating_app.api.Controllers
 
                 var result = _cloudinary.Destroy(deleteParams);
 
-                if (result.Result == "ok")
+                if (result.Result == "ok")  // cloudinary's response if destroy method is successful
                     _repo.Delete(photoFromRepo);
             }
 
-            if (photoFromRepo.PublicId == null) // case for non-cloudinary photos
+            if (photoFromRepo.PublicId == null) // if the photo is not from cloudinary
             {
-                _repo.Delete(photoFromRepo);
+                _repo.Delete(photoFromRepo);    // delete the photo in db only
             }
 
             if (await _repo.SaveAll())

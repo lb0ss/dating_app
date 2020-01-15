@@ -7,7 +7,7 @@ namespace dating_app.api.Helpers
         public int TotalItems { get; set; }
         public int TotalPages { get; set; }
 
-        public PaginationHeader (int currentPage, int itemsPerPage,     // info to be sent back in the header
+        public PaginationHeader(int currentPage, int itemsPerPage,     // info to be sent back in the header
         int totalItems, int totalPages)
         {
             this.CurrentPage = currentPage;

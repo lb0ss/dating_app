@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
           // modal state errors AND server errors (eg auth related)
           const serverError = error.error;
-          let modalStateErrors = '';
+          let modalStateErrors = '';  // regarding password, username and validation
           if (serverError.errors && typeof serverError.errors === 'object') {
             for (const key in serverError.errors) {
               if (serverError.errors[key]) {

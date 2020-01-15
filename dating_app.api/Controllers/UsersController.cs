@@ -31,7 +31,7 @@ namespace dating_app.api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams) // [FromQuery] specifies that we are passing in query strings with this request
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -39,7 +39,7 @@ namespace dating_app.api.Controllers
 
             userParams.UserId = currentUserId;
 
-            if (string.IsNullOrEmpty(userParams.Gender))        // if no gender is specified in the user params
+            if (string.IsNullOrEmpty(userParams.Gender))     
             {
                 userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
             }
@@ -48,8 +48,9 @@ namespace dating_app.api.Controllers
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
 
+            // Response is of type  HttpResponse
             Response.AddPagination(users.CurrentPage, users.PageSize,
-            users.TotalCount, users.TotalPages);
+            users.TotalCount, users.TotalPages);  // send the Pagination info to the client
 
             return Ok(usersToReturn);
         }

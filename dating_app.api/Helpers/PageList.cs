@@ -27,7 +27,7 @@ namespace dating_app.api.Helpers
         public static async Task<PageList<T>> CreateAsync(IQueryable<T> source, 
         int pageNumber, int pageSize)
         {
-            var count = await source.CountAsync();  // calculate the number of users
+            var count = await source.CountAsync();  // calculate the total of source items
             //  determine where to start when a page is requested by reducing
             // the pageSize (count) of the previous page and start from the next pageSize (count)
             var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();

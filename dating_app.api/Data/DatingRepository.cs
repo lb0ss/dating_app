@@ -18,7 +18,7 @@ namespace dating_app.api.Data
         }
         public void Add<T>(T entity) where T : class
         {
-            _context.Add(entity);   // not need to be async since this will be saved in the memory for now
+            _context.Add(entity);   // doesn't need to be async since this will be saved in the memory for now
         }
 
         public void Delete<T>(T entity) where T : class
@@ -52,9 +52,10 @@ namespace dating_app.api.Data
         }
 
         public async Task<PageList<User>> GetUsers(UserParams userParams)
-        {
+        {   
+            // this line is not executed right away here (deferred execution)
             var users =  _context.Users.Include(p => p.Photos)
-                .OrderByDescending(u => u.LastActive).AsQueryable(); // deferred execution
+                .OrderByDescending(u => u.LastActive).AsQueryable(); 
 
             users = users.Where(u => u.Id != userParams.UserId);
 

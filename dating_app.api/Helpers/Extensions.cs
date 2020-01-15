@@ -10,7 +10,7 @@ namespace dating_app.api.Helpers
         public static void AddApplicationError(this HttpResponse response, string message)
         {
             response.Headers.Add("Application-Error", message);
-            response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
+            response.Headers.Add("Access-Control-Expose-Headers", "Application-Error"); // to avoid CORS error
             response.Headers.Add("Access-Control-Allow-Origin", "*");
         }
 
@@ -22,9 +22,7 @@ namespace dating_app.api.Helpers
             camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
             response.Headers.Add("Pagination", 
                 JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));  // header to be sent back
-            // expose the header to prevent CORS error
-            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
-            
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination"); // expose the header to prevent CORS error
         }
         public static int CalculateAge(this DateTime dateTime)
         {

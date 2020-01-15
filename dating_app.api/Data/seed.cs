@@ -9,7 +9,8 @@ namespace dating_app.api.Data
     {
         public static void SeedUsers(DataContext context)
         {
-            if (!context.Users.Any())
+            // only execute the following if there's no exsiting users in db
+            if (!context.Users.Any())   
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);

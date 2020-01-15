@@ -14,9 +14,9 @@ namespace dating_app.api.Helpers
             var resultContext = await next();
 
             var userId = int.Parse(resultContext.HttpContext.User
-            .FindFirst(ClaimTypes.NameIdentifier).Value);
+            .FindFirst(ClaimTypes.NameIdentifier).Value);   // retrieve the userId from the token
 
-            var repo = resultContext.HttpContext.RequestServices.GetService<IDatingRepository>();
+            var repo = resultContext.HttpContext.RequestServices.GetService<IDatingRepository>();   // get an instance of the IDatingRepository
 
             var user = await repo.GetUser(userId);
             user.LastActive = DateTime.Now;
