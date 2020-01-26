@@ -29,7 +29,7 @@ namespace dating_app.api.Controllers
         [HttpGet("{id}", Name = "GetMessage")]
         public async Task<IActionResult> GetMessage(int userId, int id)
         {
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var messageFromRepo = await _repo.GetMessage(id);
@@ -73,7 +73,7 @@ namespace dating_app.api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, 
-        MessageForCreationDto messageForCreationDto)
+        MessageForCreationDto messageForCreationDto)        // called when a user sends a message to another
         {
                 var sender = await _repo.GetUser(userId);
 

@@ -18,17 +18,18 @@ namespace dating_app.api.Data
         public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // create primary key
             builder.Entity<Like>()
-                .HasKey(k => new {k.LikerId, k.LikeeId});
+                .HasKey(k => new {k.LikerId, k.LikeeId});   // manually tell EF the keys to be used as the primary key
 
-            builder.Entity<Like>()
+            // define the relationships
+            builder.Entity<Like>()  // one likee can have many likers
                 .HasOne(u => u.Likee)
                 .WithMany(u => u.Likers)
                 .HasForeignKey(u => u.LikeeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                
-            builder.Entity<Like>()
+            builder.Entity<Like>()  // one liker can have many likees
                 .HasOne(u => u.Liker)
                 .WithMany(u => u.Likees)
                 .HasForeignKey(u => u.LikerId)

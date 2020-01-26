@@ -61,13 +61,13 @@ namespace dating_app.api.Data
 
             users = users.Where(u => u.Gender == userParams.Gender);
 
-            if (userParams.Likers)
+            if (userParams.Likers)  // get the users who have liked the currently logged in user
             {
                 var userLikers = await GetUserLikes(userParams.UserId, userParams.Likers);
-                users = users.Where(u => userLikers.Contains(u.Id));
+                users = users.Where(u => userLikers.Contains(u.Id));    // filter out users whose id matches that of userLikers in User table
             }
 
-            if (userParams.Likees)
+            if (userParams.Likees)  // get the users whom the currently logged in user has liked
             {
                 var userLikees = await GetUserLikes(userParams.UserId, userParams.Likers);
                 users = users.Where(u => userLikees.Contains(u.Id));

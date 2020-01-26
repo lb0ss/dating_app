@@ -1,5 +1,5 @@
 namespace dating_app.api.Helpers
-{
+{   // similar to UserParams
     public class MessageParams
     {
         
