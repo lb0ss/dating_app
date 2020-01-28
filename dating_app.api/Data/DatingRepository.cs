@@ -155,9 +155,9 @@ namespace dating_app.api.Data
                 .Include(u => u.Sender).ThenInclude(p => p.Photos)
                 .Include(u => u.Recipient).ThenInclude(p => p.Photos)
                 .Where(
-                    m => m.RecipientId == userId && m.RecipientDeleted == false 
+                    m => m.RecipientId == userId && m.RecipientDeleted == false // 1. if the current user is the recipient, the recipient must be the sender
                     && m.SenderId == recipientId 
-                    || m.RecipientId == recipientId && m.SenderId == userId 
+                    || m.RecipientId == recipientId && m.SenderId == userId     // 2. if the current user is the sender, the recipient must be the recipient
                     && m.SenderDeleted == false)
                 .OrderByDescending(m => m.MessageSent)
                 .ToListAsync();

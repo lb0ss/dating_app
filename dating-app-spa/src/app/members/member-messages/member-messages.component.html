@@ -5,7 +5,7 @@
     </div>
     <ul class="chat">
       <li *ngFor="let message of messages">
-        <!-- to others -->
+        <!-- messages from others -->
         <div *ngIf="message.senderId == recipientId">
           <span class="chat-img float-left">
             <img src="{{message.senderPhotoUrl}}" alt="{{message.senderKnownAs}}" class="rounded-circle">
@@ -22,7 +22,7 @@
             <p>{{message.content}}</p>
           </div>
         </div>
-        <!-- to me -->
+        <!-- messeges from me -->
         <div *ngIf="message.senderId != recipientId">
           <span class="chat-img float-right">
             <img src="{{message.senderPhotoUrl}}" alt="{{message.senderKnownAs}}" class="rounded-circle">
@@ -33,7 +33,6 @@
                 <span class="fa fa-clock-o">{{message.messageSent | timeAgo}}</span>
                 <span *ngIf="!message.isRead" class="fa text-danger">(unread)</span>
                 <span *ngIf="message.isRead" class="fa text-success">(read {{message.dateRead | timeAgo}})</span>
-
               </small>
               <strong class="primary-font float-right">
                 {{message.senderKnownAs}}
@@ -44,12 +43,12 @@
         </div>
       </li>
     </ul>
-
   </div>
+
   <div class="card-footer">
     <form #messageForm="ngForm" (ngSubmit)="messageForm.valid && sendMessage()">
       <div class="input-group">
-        <input type="text" class="form-control input-sm" 
+        <input type="text" class="form-control input-sm"
           [(ngModel)]="newMessage.content"
           name="content"
           required
